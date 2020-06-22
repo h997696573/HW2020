@@ -1,5 +1,6 @@
 
 let tasks = [];
+let importitems = 0;
 
 function renderEditor() {
     let inputEl = document.querySelector("#default-todo-panel .todo-editor > input");
@@ -99,14 +100,24 @@ function rendertaskCtrbar(tasks, taskIdx) {
     }
     upEl.innerText = "▲";
     upEl.onclick = () => {
+        let tas = tasks[taskIdx];
+        tasks[taskIdx] = tasks[taskIdx - 1];
+        tasks[taskIdx - 1] = tas;
+        renderTaskItems();
 
     };
     ctrlbarEl.append(upEl);
 
     let downEl = document.createElement("button");
     downEl.innerText = "▼";
+    if (taskIdx === tasks.length - 1 || taskIdx === importitems - 1) {
+        downEl.disabled = true;
+    }
     downEl.onclick = () => {
-
+        let tas = tasks[taskIdx];
+        tasks[taskIdx] = tasks[taskIdx + 1];
+        tasks[taskIdx + 1] = tas;
+        renderTaskItems();
     };
     ctrlbarEl.append(downEl);
 
